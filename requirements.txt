@@ -2,3 +2,4 @@ Flask
 ftfy
 Pillow
 pytesseract
+gunicorn

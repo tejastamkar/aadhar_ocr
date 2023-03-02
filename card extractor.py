@@ -5,14 +5,14 @@ import utils
 height = 400 # height of image
 width  = 600 # width of image
 
-img = cv2.resize(cv2.imread("Sample Images\gulshan aadhar.jpg"), (width, height)) # Loading and resizing image
+img = cv2.resize(cv2.imread("sample.jpeg"), (width, height)) # Loading and resizing image
 img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) # Converting image to grayscale
 
 gaussian_blur = cv2.GaussianBlur(img_gray, (5, 5), 1) # Blurring with Gaussian blur
 
 edges = cv2.Canny(gaussian_blur, 50, 150) # Detecting with Canny edge detector
 
-kernel = np.ones((5, 5)) # Kernel dimension is set to 5*5
+kernel = np.ones((10, 10)) # Kernel dimension is set to 5*5
 dilation = cv2.dilate(edges, kernel, iterations=2) # Applying dilation
 thresh = cv2.erode(dilation, kernel, iterations=1)  # Applying erosion
 
@@ -24,7 +24,9 @@ cv2.drawContours(all_contours, contours, -1, (0, 255, 0), 2) # Drawing all detec
 cv2.imshow("All contours", all_contours)
 cv2.waitKey(0)
 
+# print(utils.biggestContour(contours))
 biggest, maxArea = utils.biggestContour(contours) # Obtaining the end points of biggest contour
+print(biggest)
 biggest = utils.reorder(biggest)
 cv2.drawContours(biggest_contour, biggest, -1, (0, 255, 0), 5) # Drawing end points of the biggest contour
 

@@ -1,0 +1,4 @@
+Flask
+ftfy
+Pillow
+pytesseract

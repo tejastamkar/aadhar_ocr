@@ -24,7 +24,7 @@ def aadharRecog(img_data):
     #     return jsonify(error="img is too blurry"), 422
     # Read Text
     text = pytesseract.image_to_string(Image.open(imgPath), lang="eng")
-    print(text)
+    # print(text)
     text = ftfy.fix_text(text)
     text = ftfy.fix_encoding(text)
     data = adhaar_read_data(text)
@@ -57,7 +57,7 @@ def adhaar_read_data(text):
 
     text1 = list(filter(None, text1))
     text0 = text1[:]
-
+    print(text0)
     try:
 
         # Cleaning first names
@@ -72,17 +72,23 @@ def adhaar_read_data(text):
         name = re.sub("[^a-zA-Z] +", " ", name)
 
         # Cleaning DOB
-        dob = text0[1][-10:]
-        dob = dob.rstrip()
-        dob = dob.lstrip()
-        dob = dob.replace("l", "/")
-        dob = dob.replace("L", "/")
-        dob = dob.replace("I", "/")
-        dob = dob.replace("i", "/")
-        dob = dob.replace("|", "/")
-        dob = dob.replace('"', "/1")
-        dob = dob.replace(":", "")
-        dob = dob.replace(" ", "")
+        for date in res: 
+            if(date.count("/") == 2 ): 
+                dob = date
+                break
+
+
+        # dob = text0[1][-10:]
+        # dob = dob.rstrip()
+        # dob = dob.lstrip()
+        # dob = dob.replace("l", "/")
+        # dob = dob.replace("L", "/")
+        # dob = dob.replace("I", "/")
+        # dob = dob.replace("i", "/")
+        # dob = dob.replace("|", "/")
+        # dob = dob.replace('"', "/1")
+        # dob = dob.replace(":", "")
+        # dob = dob.replace(" ", "")
 
         # Cleaning Adhaar number details
         aadhar_number = ""

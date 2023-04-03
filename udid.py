@@ -58,7 +58,7 @@ def udid_read_data(text):
     udid_issues = None
     text0 = []
     text1 = []
-    lines = text.split("\n")
+    lines = res.split("\n")
     for lin in lines:
         s = lin.strip()
         s = lin.replace("\n", "")

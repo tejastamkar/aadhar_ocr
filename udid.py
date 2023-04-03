@@ -19,6 +19,9 @@ def udidRecog(img_data):
     return data
 
 
+state_codes = ['AN', 'AP', 'AR', 'AS', 'BR', 'CH', 'CT', 'DN', 'DD', 'DL', 'GA', 'GJ', 'HR', 'HP', 'JK', 'JH', 'KA',
+               'KL', 'LD', 'MP', 'MH', 'MN', 'ML', 'MZ', 'NL', 'OR', 'PY', 'PB', 'RJ', 'SK', 'TN', 'TG', 'TR', 'UP', 'UT', 'WB']
+
 disabilityTypeOptions = [
     "Acid Attack Victim",
     "Blindness",
@@ -58,7 +61,7 @@ def udid_read_data(text):
     udid_issues = None
     text0 = []
     text1 = []
-    lines = res.split("\n")
+    lines = text.split("\n")
     for lin in lines:
         s = lin.strip()
         s = lin.replace("\n", "")
@@ -72,15 +75,16 @@ def udid_read_data(text):
     # temp = ""
     try:
         for item in text0:
-            if (len(item) == 18):
-                udid_number = item
+            if (len(item) >= 18 and udid_number == None):
+
+                udid_number = getUDIDNumber(item)
         for item in res:
             if (len(item) == 3 and item.count("%") == 1):
                 disability_percent = item
             if (item.count("/") == 2):
                 if udid_issues == None:
                     udid_issues = item
-            if (item in disabilityTypeOptions): 
+            if (item in disabilityTypeOptions):
                 disability_type = item
                 # Cleaning first names
                 # name = text0[0]
@@ -137,6 +141,15 @@ def udid_read_data(text):
 #     os.path.realpath(__file__)), "..", "tmp")
 # if not os.path.exists(tempPath):
 #     os.mkdir(tempPath)
+
+def getUDIDNumber(text):
+    if len(text) >= 2:
+        state = ''.join(text[:2])
+        if state in state_codes:
+            number = ''.join(text[2:16])
+            udidnumber = state+number
+            return udidnumber
+    return None
 
 
 def findword(textlist, wordstring):

@@ -95,7 +95,7 @@ def udid_read_data(text):
                     disability_type = item
 
         for item in res:
-            if (len(item) == 3 and item.count("%") == 1):
+            if (len(item) >= 3 and item.count("%") == 1):
                 disability_percent = item
             if (item.count("/") == 2):
                 if udid_issues == None:

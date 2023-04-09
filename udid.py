@@ -71,13 +71,29 @@ def udid_read_data(text):
 
     text1 = list(filter(None, text1))
     text0 = text1[:]
+    print("\n")
     print(text0)
     # temp = ""
     try:
-        for item in text0:
+        for item in res:
             if (len(item) >= 18 and udid_number == None):
 
                 udid_number = getUDIDNumber(item)
+        for item in res:
+            if (item.count("%") == 1):
+                disability_percent = item
+            if (item.count("/") == 2):
+                if udid_issues == None:
+                    udid_issues = item
+            if (item in disabilityTypeOptions):
+                disability_type = item
+        for item in text0:
+            if (len(item) >= 18 and udid_number == None):
+                udid_number = getUDIDNumber(item)
+            for types in disabilityTypeOptions: 
+                if(match_percentage(item, types) > 90 ):
+                    disability_type = item
+
         for item in res:
             if (len(item) == 3 and item.count("%") == 1):
                 disability_percent = item
@@ -86,6 +102,12 @@ def udid_read_data(text):
                     udid_issues = item
             if (item in disabilityTypeOptions):
                 disability_type = item
+           
+                
+        # Example usage
+        s1 = 'The quick brown fox jumped over the lazy dog'
+        s2 = 'The brown fox jumped over the lazy dog'
+
                 # Cleaning first names
                 # name = text0[0]
                 # print(name)
@@ -169,3 +191,25 @@ def findword(textlist, wordstring):
 #     filePath = os.path.join(tempPath, fileName)
 #     im.save(filePath)
 #     return filePath
+
+def get_word_list(s):
+    # Split the string into words, convert them to lowercase, and return a list
+    return s.lower().split()
+
+
+def match_percentage(s1, s2):
+    # Get the word lists for each string
+    words1 = get_word_list(s1)
+    words2 = get_word_list(s2)
+
+    # Count the number of matching words
+    match_count = sum(1 for word in words1 if word in words2)
+
+    # Calculate the percentage of matching words
+    percent = match_count / len(words1) * 100
+
+    # Return the percentage as a string with two decimal places
+    return percent
+
+
+
